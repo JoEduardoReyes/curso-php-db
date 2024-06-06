@@ -1,0 +1,13 @@
+{
+    "name": "joedu/curso-php-db",
+    "description": "Proyecto de curso de conexion de pHP con bases de datos",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eduardo Reyes",
+            "email": "joeduardoreyes@outlook.com"
+        }
+    ],
+    "require": {}
+}
