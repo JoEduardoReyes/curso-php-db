@@ -1,6 +1,6 @@
 <?php
 
-namespace Databse\MySQLi;
+namespace Database\MySQLi;
 
 class Connection
 {
