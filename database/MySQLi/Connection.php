@@ -1,28 +1,51 @@
 <?php
 
-$server = "localhost";
-$database = "finanzas_personales";
-$username = "joedu";
-$password = "toor";
+namespace Databse\MySQLi;
 
-// Esta es la forma procedural
-//$mysqli = mysqli_connect($server, $username, $password, $database);
+class Connection
+{
+  private static $instance;
+  private $connection;
+  private const SERVER = "localhost";
+  private const DATABASE = "finanzas_personales";
+  private const USERNAME = "joedu";
+  private const PASSWORD = "toor";
 
-// Esta es al forma orientada a objetos
-$mysqli = new mysqli($server, $username, $password, $database);
+  private function __construct()
+  {
+    throw new \RuntimeException("No se debe instanciar la clase Connection directamente. Use Connection::getInstance()");
+  }
 
-// Comprobar conexión de manera procedural
-/* if (!$mysqli)
-    die("Falló la conexión: " . mysqli_connect_error()); */
+  public static function getInstance(): Connection
+  {
+    if (!self::$instance) {
+      self::$instance = new self();
+      self::$instance->makeConnection();
+    }
 
-// Comprobar conexión de manera orientada a objetos
-if ($mysqli->connect_errno)
-    die("Falló la conexión: {$mysqli->connect_error}");
+    return self::$instance;
+  }
 
-// Esto nos ayuda a poder usar cualquier caracter en nuestras consultas
-$setnames = $mysqli->prepare("SET NAMES 'utf8'");
-$setnames->execute();
+  public function getDataBaseInstance(): mysqli
+  {
+    return $this->connection;
+  }
 
-// var_dump($setnames);
+  private function makeConnection(): void
+  {
+    try {
+      $this->connection = new mysqli(
+        self::SERVER,
+        self::USERNAME,
+        self::PASSWORD,
+        self::DATABASE
+      );
 
-var_dump($setnames);
+      if ($this->connection->connect_error) {
+        throw new \RuntimeException("Falló la conexión: {$this->connection->connect_error}");
+      }
+    } catch (\Throwable $e) {
+      throw new \RuntimeException("Error al conectar a la base de datos: {$e->getMessage()}");
+    }
+  }
+}

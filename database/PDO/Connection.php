@@ -1,13 +1,47 @@
 <?php
 
-$server = "localhost";
-$database = "finanzas_personales";
-$username = "joedu";
-$password = "toor";
+namespace Databse\PDO;
 
-$connection = new PDO("mysql:host=$server;dbname=$database", $username, $password);
+class Connection
+{
+  private static $instance;
+  private $pdo;
+  private const SERVER = "localhost";
+  private const DATABASE = "finanzas_personales";
+  private const USERNAME = "joedu";
+  private const PASSWORD = "toor";
 
-$setnames = $connection->prepare("SET NAMES 'utf8'");
-$setnames->execute();
+  private function __construct()
+  {
+    $this->connect();
+  }
 
-var_dump($setnames);
+  public static function getInstance(): Connection
+  {
+    if (!self::$instance) {
+      self::$instance = new self();
+    }
+
+    return self::$instance;
+  }
+
+  public function getPdo(): PDO
+  {
+    return $this->pdo;
+  }
+
+  private function connect(): void
+  {
+    try {
+      $this->pdo = new PDO(
+        "mysql:host=" . self::SERVER . ";dbname=" . self::DATABASE,
+        self::USERNAME,
+        self::PASSWORD
+      );
+      $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $this->pdo->exec("SET NAMES 'utf8'");
+    } catch (\PDOException $e) {
+      throw new \RuntimeException("Error al conectar a la base de datos: {$e->getMessage()}");
+    }
+  }
+}
