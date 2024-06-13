@@ -1,19 +1,26 @@
 <?php
 
+use App\Controllers\IncomesController;
+use App\Enums\IncomeTypeEnum;
 use App\Controllers\WithdrawalsController;
-use App\Enums\PaymentMethodEnum;
 use App\Enums\WithdrawalTypeEnum;
+use App\Enums\PaymentMethodEnum;
 
 require("vendor/autoload.php");
 
 //$incomes_controller = new IncomesController();
-//$incomes_controller->store([
+//
+//// Definir los datos a insertar
+//$data = [
 //  "payment_method" => PaymentMethodEnum::BankAccount->value,
 //  "type" => IncomeTypeEnum::Salary->value,
-//  "date" => date("Y-m-d H:i:s"), // 2022-06-24 15:06:45
-////  "amount" => 84351,
+//  "date" => date("Y-m-d H:i:s"),
+//  "amount" => 665684,
 //  "description" => "Pago de mi salario por mi arduo y muy bien trabajo :D"
-//]);
+//];
+//
+//// Llamar al método store para insertar los datos
+//$incomes_controller->store($data);
 
 //$withdraw_controller = new WithdrawalsController();
 //$withdraw_controller->store([
@@ -25,4 +32,7 @@ require("vendor/autoload.php");
 //]);
 
 $withdrawalController = new WithdrawalsController();
-$withdrawalController->index();
+$withdrawalController->show(1);
+//
+//$incomes_controller = new IncomesController();
+//$incomes_controller->index();

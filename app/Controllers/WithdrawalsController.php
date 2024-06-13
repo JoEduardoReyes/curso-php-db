@@ -10,7 +10,8 @@ class WithdrawalsController
 
   private $connection;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->connection = Connection::getInstance()->get_database_instance();
   }
 
@@ -66,8 +67,13 @@ class WithdrawalsController
   /**
    * Muestra un único recurso especificado
    */
-  public function show()
+  public function show($id)
   {
+    $stmt = $this->connection->prepare("SELECT * FROM withdrawals WHERE id = :id");
+    $stmt->execute(array(":id" => $id));
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo "el registro con id: $id dice que te gastaste {$result['amount']} USD en: " . $result["description"] . "\n";
   }
 
   /**

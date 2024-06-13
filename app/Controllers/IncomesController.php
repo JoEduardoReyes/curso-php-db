@@ -2,16 +2,30 @@
 
 namespace App\Controllers;
 
-use Database\MySQLi\Connection;
+use Database\PDO\Connection;
+use PDO;
+use PDOException;
 
 class IncomesController
 {
+  private $connection;
+
+  public function __construct()
+  {
+    $this->connection = Connection::getInstance()->get_database_instance();
+  }
 
   /**
    * Muestra una lista de este recurso
    */
   public function index()
   {
+    $stmt = $this->connection->prepare("SELECT * FROM incomes");
+    $stmt->execute();
+
+    while ($row = $stmt->fetch()) {
+      echo "Ganaste: " . $row["amount"] . " USD en: " . $row["description"] . "\n";
+    }
   }
 
   /**
@@ -26,22 +40,39 @@ class IncomesController
    */
   public function store($data): void
   {
+    // Obtener los datos del arreglo $data
     $payment_method = $data['payment_method'];
     $type = $data['type'];
     $date = $data['date'];
     $amount = $data['amount'];
     $description = $data['description'];
 
-    $connection = Connection::getInstance()->get_database_instance();
+    try {
+      // Obtener una instancia de la conexión PDO
+      $connection = Connection::getInstance()->get_database_instance();
 
-    $stmt = $connection->prepare("INSERT INTO incomes (payment_method, type, date, amount, description) VALUES(?,?,?,?,?);");
+      // Consulta SQL preparada con marcadores de posición
+      $sql = "INSERT INTO incomes (payment_method, type, date, amount, description) VALUES (?, ?, ?, ?, ?)";
 
-    $stmt->bind_param("iisds", $payment_method, $type, $date, $amount, $description);
+      // Preparar la consulta
+      $stmt = $connection->prepare($sql);
 
-    $stmt->execute();
+      // Vincular parámetros con bindValue (PDO::PARAM_*)
+      $stmt->bindValue(1, $payment_method, PDO::PARAM_INT);
+      $stmt->bindValue(2, $type, PDO::PARAM_INT);
+      $stmt->bindValue(3, $date, PDO::PARAM_STR);
+      $stmt->bindValue(4, $amount, PDO::PARAM_STR); // o \PDO::PARAM_INT si amount es un entero
+      $stmt->bindValue(5, $description, PDO::PARAM_STR);
 
-    echo "Se han insertado {$stmt->affected_rows} filas en la base de datos.";
+      // Ejecutar la consulta
+      $stmt->execute();
 
+      // Obtener el número de filas afectadas
+      $affected_rows = $stmt->rowCount();
+      echo "Se han insertado $affected_rows filas en la base de datos.";
+    } catch (PDOException $e) {
+      echo "Error al insertar en la base de datos: " . $e->getMessage();
+    }
   }
 
   /**
