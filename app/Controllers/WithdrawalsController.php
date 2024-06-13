@@ -35,9 +35,15 @@ class WithdrawalsController
                                                                                   :date,
                                                                                   :amount,
                                                                                   :description
-)");
+    )");
 
-    $stmt->execute($data);
+    $stmt->bindParam(':payment_method', $data['payment_method']);
+    $stmt->bindParam(':type', $data['type']);
+    $stmt->bindParam(':date', $data['date']);
+    $stmt->bindParam(':amount', $data['amount']);
+    $stmt->bindParam(':description', $data['description']);
+
+    $stmt->execute();
 
 
   }
