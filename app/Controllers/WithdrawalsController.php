@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Database\PDO\Connection;
+
 class WithdrawalsController
 {
 
@@ -22,8 +24,22 @@ class WithdrawalsController
   /**
    * Guarda un nuevo recurso en la base de datos
    */
-  public function store()
+  public function store($data)
   {
+
+    $connection = Connection::getInstance()->get_database_instance();
+
+    $stmt = $connection->prepare("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (
+                                                                                  :payment_method,
+                                                                                  :type,
+                                                                                  :date,
+                                                                                  :amount,
+                                                                                  :description
+)");
+
+    $stmt->execute($data);
+
+
   }
 
   /**

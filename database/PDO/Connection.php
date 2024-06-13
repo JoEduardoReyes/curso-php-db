@@ -1,47 +1,39 @@
 <?php
 
-namespace Databse\PDO;
+namespace Database\PDO;
 
-class Connection
-{
+class Connection {
+
   private static $instance;
-  private $pdo;
-  private const SERVER = "localhost";
-  private const DATABASE = "finanzas_personales";
-  private const USERNAME = "joedu";
-  private const PASSWORD = "toor";
+  private $connection;
 
-  private function __construct()
-  {
-    $this->connect();
+  private function __construct() {
+    $this->make_connection();
   }
 
-  public static function getInstance(): Connection
-  {
-    if (!self::$instance) {
+  public static function getInstance() {
+    if (!self::$instance instanceof self)
       self::$instance = new self();
-    }
 
     return self::$instance;
   }
 
-  public function getPdo(): PDO
-  {
-    return $this->pdo;
+  public function get_database_instance() {
+    return $this->connection;
   }
 
-  private function connect(): void
-  {
-    try {
-      $this->pdo = new PDO(
-        "mysql:host=" . self::SERVER . ";dbname=" . self::DATABASE,
-        self::USERNAME,
-        self::PASSWORD
-      );
-      $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $this->pdo->exec("SET NAMES 'utf8'");
-    } catch (\PDOException $e) {
-      throw new \RuntimeException("Error al conectar a la base de datos: {$e->getMessage()}");
-    }
+  private function make_connection() {
+    $server = "localhost";
+    $database = "finanzas_personales";
+    $username = "joedu";
+    $password = "toor";
+
+    $conexion = new \PDO("mysql:host=$server;dbname=$database", $username, $password);
+
+    $setnames = $conexion->prepare("SET NAMES 'utf8'");
+    $setnames->execute();
+
+    $this->connection = $conexion;
   }
+
 }
