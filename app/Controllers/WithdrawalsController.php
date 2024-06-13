@@ -3,15 +3,31 @@
 namespace App\Controllers;
 
 use Database\PDO\Connection;
+use PDO;
 
 class WithdrawalsController
 {
+
+  private $connection;
+
+  public function __construct() {
+    $this->connection = Connection::getInstance()->get_database_instance();
+  }
 
   /**
    * Muestra una lista de este recurso
    */
   public function index()
   {
+    $stmt = $this->connection->prepare("SELECT * FROM withdrawals");
+
+    $stmt->execute();
+
+    $results = $stmt->fetchAll();
+
+    foreach ($results as $result) {
+      echo "Gastaste " . $result["amount"] . " USD en: " . $result["description"] . "\n";
+    }
   }
 
   /**
@@ -27,9 +43,8 @@ class WithdrawalsController
   public function store($data)
   {
 
-    $connection = Connection::getInstance()->get_database_instance();
 
-    $stmt = $connection->prepare("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (
+    $stmt = $this->connection->prepare("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (
                                                                                   :payment_method,
                                                                                   :type,
                                                                                   :date,
