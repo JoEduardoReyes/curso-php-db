@@ -1,21 +1,19 @@
 {
-  "name": "joedu/curso-php-db",
-  "description": "Proyecto de curso de conexion de pHP con bases de datos",
-  "type": "project",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Eduardo Reyes",
-      "email": "joeduardoreyes@outlook.com"
+    "name": "joedu/curso-php-db",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Eduardo Reyes",
+            "email": "joeduardoreyes@outlook.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\": "database/"
+        }
+    },
+    "require": {
+      "ext-mysqli": "*"
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Database\\": "database/",
-      "App\\": "app/"
-    }
-  },
-  "require": {
-    "ext-mysqli": "*"
-  }
 }

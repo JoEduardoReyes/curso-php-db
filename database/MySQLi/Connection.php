@@ -2,50 +2,50 @@
 
 namespace Database\MySQLi;
 
-class Connection
-{
+use mysqli;
+
+class Connection {
+
   private static $instance;
   private $connection;
-  private const SERVER = "localhost";
-  private const DATABASE = "finanzas_personales";
-  private const USERNAME = "joedu";
-  private const PASSWORD = "toor";
 
-  private function __construct()
-  {
-    throw new \RuntimeException("No se debe instanciar la clase Connection directamente. Use Connection::getInstance()");
+  private function __construct() {
+    $this->make_connection();
   }
 
-  public static function getInstance(): Connection
-  {
-    if (!self::$instance) {
+  public static function getInstance() {
+
+    if(!self::$instance instanceof self)
       self::$instance = new self();
-      self::$instance->makeConnection();
-    }
 
     return self::$instance;
+
   }
 
-  public function getDataBaseInstance(): mysqli
-  {
+  public function get_database_instance() {
     return $this->connection;
   }
 
-  private function makeConnection(): void
-  {
-    try {
-      $this->connection = new mysqli(
-        self::SERVER,
-        self::USERNAME,
-        self::PASSWORD,
-        self::DATABASE
-      );
+  private function make_connection() {
 
-      if ($this->connection->connect_error) {
-        throw new \RuntimeException("Falló la conexión: {$this->connection->connect_error}");
-      }
-    } catch (\Throwable $e) {
-      throw new \RuntimeException("Error al conectar a la base de datos: {$e->getMessage()}");
-    }
+    $server = "localhost";
+    $database = "finanzas_personales";
+    $username = "joedu";
+    $password = "toor";
+
+    // Esta es al forma orientada a objetos
+    $mysqli = new \mysqli($server, $username, $password, $database);
+
+    // Comprobar conexión de manera orientada a objetos
+    if ($mysqli->connect_errno)
+      die("Falló la conexión: {$mysqli->connect_error}");
+
+    // Esto nos ayuda a poder usar cualquier caracter en nuestras consultas
+    $setnames = $mysqli->prepare("SET NAMES 'utf8'");
+    $setnames->execute();
+
+    $this->connection = $mysqli;
+
   }
+
 }
