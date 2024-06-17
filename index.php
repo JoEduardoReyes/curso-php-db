@@ -36,6 +36,22 @@ require("vendor/autoload.php");
 
 //$incomes_controller = new IncomesController();
 //$incomes_controller->index();
+//
+//$incomes_controlles = new IncomesController();
+//$incomes_controlles->show(1);
 
-$incomes_controlles = new IncomesController();
-$incomes_controlles->show(1);
+$incomes_controller = new IncomesController();
+
+// Datos de prueba para insertar
+$data = [
+  "payment_method" => PaymentMethodEnum::BankAccount->value,
+  "type" => IncomeTypeEnum::Salary->value,
+  "date" => date("Y-m-d H:i:s"), // Fecha y hora actual
+  "amount" => 1000000,
+  "description" => "Pago de salario por arduo trabajo"
+];
+
+// Llamar al método store del controlador para insertar
+$incomes_controller->store($data);
+
+echo "Datos insertados correctamente.";
