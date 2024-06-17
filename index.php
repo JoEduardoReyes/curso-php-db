@@ -31,8 +31,11 @@ require("vendor/autoload.php");
 //  "description" => "Juguetitos para mis michis"
 //]);
 
-$withdrawalController = new WithdrawalsController();
-$withdrawalController->show(1);
-//
+//$withdrawalController = new WithdrawalsController();
+//$withdrawalController->show(1);
+
 //$incomes_controller = new IncomesController();
 //$incomes_controller->index();
+
+$incomes_controlles = new IncomesController();
+$incomes_controlles->show(1);

@@ -86,8 +86,41 @@ class WithdrawalsController
   /**
    * Actualiza un recurso específico en la base de datos
    */
-  public function update()
+  public function update($id, $data): void
   {
+    try {
+      // Iniciar una transacción
+      $this->connection->beginTransaction();
+
+      // Preparar la consulta de actualización
+      $stmt = $this->connection->prepare("UPDATE incomes SET 
+                payment_method = :payment_method,
+                type = :type,
+                date = :date,
+                amount = :amount,
+                description = :description
+                WHERE id = :id");
+
+      // Vincular parámetros para evitar SQL injection
+      $stmt->bindParam(':payment_method', $data['payment_method'], \PDO::PARAM_INT);
+      $stmt->bindParam(':type', $data['type'], \PDO::PARAM_INT);
+      $stmt->bindParam(':date', $data['date'], \PDO::PARAM_STR);
+      $stmt->bindParam(':amount', $data['amount'], \PDO::PARAM_STR);
+      $stmt->bindParam(':description', $data['description'], \PDO::PARAM_STR);
+      $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+
+      // Ejecutar la consulta
+      $stmt->execute();
+
+      // Confirmar la transacción
+      $this->connection->commit();
+
+      echo "El registro con ID {$id} ha sido actualizado exitosamente.\n";
+    } catch (PDOException $e) {
+      // Revertir la transacción en caso de excepción
+      $this->connection->rollBack();
+      echo "Error al intentar actualizar el registro: " . $e->getMessage();
+    }
   }
 
   /**
