@@ -22,6 +22,7 @@
             <th>Fecha</th>
             <th>Monto</th>
             <th>Descripción</th>
+            <th>Acciones</th> <!-- Agregamos esta columna para los enlaces de detalles -->
         </tr>
         </thead>
         <tbody>
@@ -32,6 +33,9 @@
                 <td><?php echo htmlspecialchars($result["date"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php echo htmlspecialchars($result["amount"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php echo htmlspecialchars($result["description"], ENT_QUOTES, 'UTF-8'); ?></td>
+                <td class="table-actions">
+                    <a href="/incomes/show/<?php echo $result['id']; ?>">Ver detalles</a>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>

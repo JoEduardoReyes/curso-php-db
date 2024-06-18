@@ -1,0 +1,38 @@
+/* show.css */
+
+/* Estilos específicos para la vista detallada de ingresos */
+
+.main-container {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.field-label {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.field-value {
+    color: #cccccc;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #2196F3; /* Azul primario */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: #0d8bff; /* Azul claro al hacer hover */
+}

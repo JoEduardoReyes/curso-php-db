@@ -1,0 +1,14 @@
+/* Estilos para el botón Ver detalles */
+.table-actions a {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #2196F3; /* Azul primario */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.table-actions a:hover {
+    background-color: #0d8bff; /* Azul claro al hacer hover */
+}

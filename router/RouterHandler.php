@@ -22,12 +22,13 @@ class RouterHandler {
     switch($this->method) {
 
       case "get":
-        if ($id && $id == "create")
+        if ($id == "create") {
           $resource->create();
-        else if($id)
+        } elseif ($id) {
           $resource->show($id);
-        else
+        } else {
           $resource->index();
+        }
         break;
 
       case "post":
@@ -43,3 +44,4 @@ class RouterHandler {
   }
 
 }
+?>

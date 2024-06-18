@@ -83,7 +83,7 @@ class IncomesController
   /**
    * Muestra un único recurso especificado
    */
-  public function show($id): void
+  public function show($id)
   {
     try {
       // Preparar la consulta para seleccionar un registro por ID
@@ -99,12 +99,7 @@ class IncomesController
       $income = $stmt->fetch(PDO::FETCH_ASSOC);
 
       if ($income) {
-        echo "ID: {$income['id']}\n";
-        echo "Método de pago: {$income['payment_method']}\n";
-        echo "Tipo: {$income['type']}\n";
-        echo "Fecha: {$income['date']}\n";
-        echo "Monto: {$income['amount']}\n";
-        echo "Descripción: {$income['description']}\n";
+        require("../resources/views/incomes/show.php"); // Asegúrate de que esta vista exista
       } else {
         echo "No se encontró el registro con ID $id.\n";
       }
