@@ -1,25 +1,50 @@
 <?php
 
-require('../vendor/autoload.php');
+require("../vendor/autoload.php");
 
-// Obtener URL
-$slug = $_GET['slug'] ?? "";
+use App\Controllers\IncomesController;
+use App\Controllers\WithdrawalsController;
+use Router\RouterHandler;
+
+// Obtener la URL
+$slug = $_GET["slug"] ?? "";
 $slug = explode("/", $slug);
 
 $resource = $slug[0] == "" ? "/" : $slug[0];
 $id = $slug[1] ?? null;
 
+// incomes/1
+
+// Intancia del router
+
+$router = new RouterHandler();
+
 switch ($resource) {
-  case "/":
-    echo "Estas en la fromt page";
+
+  case '/':
+    echo "Estás en la front page";
     break;
+
   case "incomes":
-    echo "Estas con incomes";
+
+    $method = $_POST["method"] ?? "get";
+    $router->set_method($method);
+    $router->set_data($_POST);
+    $router->route(IncomesController::class, $id);
+
     break;
-  case "widthdraws":
-    echo "Estas con widthdraws";
+
+  case "withdrawals":
+
+    $method = $_POST["method"] ?? "get";
+    $router->set_method($method);
+    $router->set_data($_POST);
+    $router->route(WithdrawalsController::class, $id);
+
     break;
+
   default:
-    echo "404 Not found";
+    echo "404 Not Found";
     break;
+
 }
