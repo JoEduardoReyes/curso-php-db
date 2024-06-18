@@ -20,20 +20,14 @@ class IncomesController
    */
   public function index()
   {
-    // Preparar la consulta SQL para seleccionar todos los registros de la tabla incomes
-    $stmt = $this->connection->prepare("SELECT amount, description FROM incomes");
+    try {
+      $stmt = $this->connection->prepare("SELECT * FROM incomes");
+      $stmt->execute();
+      $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      require("../resources/views/incomes/index.php");
 
-    // Ejecutar la consulta preparada
-    $stmt->execute();
-
-    // Vincular las columnas 'amount' y 'description' a variables PHP
-    $stmt->bindColumn('amount', $amount, PDO::PARAM_STR);
-    $stmt->bindColumn('description', $description, PDO::PARAM_STR);
-
-    // Recuperar y mostrar cada fila de resultados
-    while ($stmt->fetch(PDO::FETCH_BOUND)) {
-      // Imprimir los resultados vinculados
-      echo "Ganaste: $amount USD en: $description \n";
+    } catch (PDOException $e) {
+      echo "Error: " . $e->getMessage();
     }
   }
 
@@ -42,6 +36,7 @@ class IncomesController
    */
   public function create()
   {
+    require("../resources/views/incomes/create.php");
   }
 
   /**
@@ -82,6 +77,7 @@ class IncomesController
     } catch (PDOException $e) {
       echo "Error al insertar en la base de datos: " . $e->getMessage();
     }
+    header("location: incomes");
   }
 
   /**
@@ -146,12 +142,12 @@ class IncomesController
                 WHERE id = :id");
 
       // Vincular parámetros para evitar SQL injection
-      $stmt->bindParam(':payment_method', $data['payment_method'], \PDO::PARAM_INT);
-      $stmt->bindParam(':type', $data['type'], \PDO::PARAM_INT);
-      $stmt->bindParam(':date', $data['date'], \PDO::PARAM_STR);
-      $stmt->bindParam(':amount', $data['amount'], \PDO::PARAM_STR);
-      $stmt->bindParam(':description', $data['description'], \PDO::PARAM_STR);
-      $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+      $stmt->bindParam(':payment_method', $data['payment_method'], PDO::PARAM_INT);
+      $stmt->bindParam(':type', $data['type'], PDO::PARAM_INT);
+      $stmt->bindParam(':date', $data['date'], PDO::PARAM_STR);
+      $stmt->bindParam(':amount', $data['amount'], PDO::PARAM_STR);
+      $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
       // Ejecutar la consulta
       $stmt->execute();
@@ -166,6 +162,7 @@ class IncomesController
       echo "Error al intentar actualizar el registro: " . $e->getMessage();
     }
   }
+
   /**
    * Elimina un recurso específico de la base de datos
    */
@@ -179,7 +176,7 @@ class IncomesController
       $stmt = $this->connection->prepare("DELETE FROM incomes WHERE id = :id");
 
       // Vincular el parámetro ID para evitar SQL injection
-      $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
       // Ejecutar la consulta
       $stmt->execute();
