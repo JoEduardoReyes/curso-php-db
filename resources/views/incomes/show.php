@@ -34,6 +34,8 @@
 
     <a class="back-link" href="/incomes">Volver a la lista de ingresos</a>
 
+    <a class="button-link" href="/incomes/delete/<?= $income['id'] ?>">Eliminar este ingreso</a>
+
 </main>
 
 </body>
