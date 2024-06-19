@@ -51,6 +51,7 @@
     </div>
 
   </form>
+    <a href="/incomes" class="button-link">Volver a la lista</a>
 </main>
 
 </body>

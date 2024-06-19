@@ -7,40 +7,44 @@ use App\Controllers\WithdrawalsController;
 use Router\RouterHandler;
 
 // Obtener la URL
-$slug = $_SERVER["REQUEST_URI"] ?? "/";
+$slug = $_GET["slug"] ?? "";
 $slug = explode("/", $slug);
 
-$resource = $slug[1] ?? "/";
-$id = $slug[3] ?? null;
+$resource = $slug[0] == "" ? "/" : $slug[0];
+$id = $slug[1] ?? null;
 
-// Instancia del router
+// incomes/1
+
+// Intancia del router
+
 $router = new RouterHandler();
 
 switch ($resource) {
+
   case '/':
-    echo "Estás en la página de inicio";
+    echo "Estás en la front page";
     break;
 
   case "incomes":
-    if ($id && is_numeric($id)) {
-      $router->set_method("get");
-      $router->route(IncomesController::class, $id);
-    } else {
-      $method = $_POST["method"] ?? "get";
-      $router->set_method($method);
-      $router->set_data($_POST);
-      $router->route(IncomesController::class, $id);
-    }
+
+    $method = $_POST["method"] ?? "get";
+    $router->set_method($method);
+    $router->set_data($_POST);
+    $router->route(IncomesController::class, $id);
+
     break;
 
   case "withdrawals":
+
     $method = $_POST["method"] ?? "get";
     $router->set_method($method);
     $router->set_data($_POST);
     $router->route(WithdrawalsController::class, $id);
+
     break;
 
   default:
     echo "404 Not Found";
     break;
+
 }

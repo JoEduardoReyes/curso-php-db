@@ -34,7 +34,7 @@
                 <td><?php echo htmlspecialchars($result["amount"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php echo htmlspecialchars($result["description"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td class="table-actions">
-                    <a href="/incomes/show/<?php echo $result['id']; ?>">Ver detalles</a>
+                    <a href="/incomes/<?php echo $result['id']; ?>">Ver detalles</a>
                 </td>
             </tr>
         <?php endforeach; ?>
