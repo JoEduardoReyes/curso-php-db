@@ -32,9 +32,41 @@
     <div class="field-label">Descripción:</div>
     <div class="field-value"><?= $income['description'] ?></div>
 
+    <!-- Botón para eliminar -->
+    <button class="delete-button" onclick="confirmAndDelete(<?= $income['id'] ?>)">Eliminar</button>
+
     <a class="back-link" href="/incomes">Volver a la lista de ingresos</a>
 
 </main>
+
+<script>
+    function confirmAndDelete(id) {
+        if (confirm('¿Estás seguro de que deseas eliminar este registro?')) {
+            // Crear una solicitud DELETE utilizando fetch API
+            fetch(`/incomes/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Registro eliminado correctamente.');
+                        // Redirigir a la lista de ingresos u otra página si es necesario
+                        window.location.href = '/incomes';
+                    } else {
+                        console.error('Error al eliminar el registro.');
+                        response.text().then(text => {
+                            console.error('Error details:', text);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        }
+    }
+</script>
 
 </body>
 </html>

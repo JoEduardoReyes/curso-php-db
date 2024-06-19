@@ -15,6 +15,10 @@ class IncomesController
     $this->connection = Connection::getInstance()->get_database_instance();
   }
 
+  public function get_connection()
+  {
+    return $this->connection;
+  }
   /**
    * Muestra una lista de este recurso
    */
@@ -176,18 +180,10 @@ class IncomesController
       // Ejecutar la consulta
       $stmt->execute();
 
-      // Confirmar con el usuario antes de proceder
-      $sure = readline("De verdad quieres borrar este registro? (si/no): ");
+      // Confirmar la transacción
+      $this->connection->commit();
 
-      if (strtolower($sure) === "no") {
-        // Revertir la transacción si el usuario no confirma
-        $this->connection->rollBack();
-        echo "Operación cancelada. No se eliminó el registro.\n";
-      } else {
-        // Confirmar la transacción
-        $this->connection->commit();
-        echo "El registro con ID {$id} ha sido eliminado exitosamente.\n";
-      }
+      echo "El registro con ID {$id} ha sido eliminado exitosamente.\n";
 
     } catch (PDOException $e) {
       // Revertir la transacción en caso de excepción
@@ -195,6 +191,7 @@ class IncomesController
       echo "Error al intentar eliminar el registro: " . $e->getMessage();
     }
   }
+
 
 
 }

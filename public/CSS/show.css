@@ -33,6 +33,20 @@
     transition: background-color 0.3s ease;
 }
 
+.delete-button {
+    background-color: #d9534f; /* Rojo */
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: #c9302c; /* Rojo más oscuro al hacer hover */
+}
+
 .back-link:hover {
     background-color: #0d8bff; /* Azul claro al hacer hover */
 }

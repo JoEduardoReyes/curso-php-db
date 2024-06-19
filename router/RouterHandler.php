@@ -36,9 +36,16 @@ class RouterHandler {
         break;
 
       case "delete":
-        $resource->delete($id);
+        if ($id) {
+          $resource->destroy($id);
+        } else {
+          echo "Error: No se proporcionó un ID para eliminar.";
+        }
         break;
 
+      default:
+        echo "Método no soportado.";
+        break;
     }
 
   }
