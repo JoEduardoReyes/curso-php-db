@@ -51,9 +51,15 @@ class IncomesController
     // Obtener los datos del arreglo $data
     $payment_method = $data['payment_method'];
     $type = $data['type'];
-    $date = $data['date'];
+    $date = $data['datetime'];  // Obtener la fecha y hora combinadas desde el campo oculto
     $amount = $data['amount'];
     $description = $data['description'];
+
+    // Verificar el formato de la fecha
+    if (preg_match('/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/', $date) !== 1) {
+      echo "Formato de fecha inválido: $date";
+      return;
+    }
 
     try {
       // Obtener una instancia de la conexión PDO
@@ -69,7 +75,7 @@ class IncomesController
       $stmt->bindValue(1, $payment_method, PDO::PARAM_INT);
       $stmt->bindValue(2, $type, PDO::PARAM_INT);
       $stmt->bindValue(3, $date, PDO::PARAM_STR);
-      $stmt->bindValue(4, $amount, PDO::PARAM_STR); // o \PDO::PARAM_INT si amount es un entero
+      $stmt->bindValue(4, $amount, PDO::PARAM_INT);
       $stmt->bindValue(5, $description, PDO::PARAM_STR);
 
       // Ejecutar la consulta
@@ -81,8 +87,11 @@ class IncomesController
     } catch (PDOException $e) {
       echo "Error al insertar en la base de datos: " . $e->getMessage();
     }
-    header("location: incomes");
+    header("Location: /incomes");
   }
+
+
+
 
   /**
    * Muestra un único recurso especificado
