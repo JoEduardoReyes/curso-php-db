@@ -11,27 +11,34 @@ document.getElementById('edit-button').addEventListener('click', function() {
 document.getElementById('income-details-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    let formData = new FormData(this);
-    formData.append('_method', 'put'); // Agregar el campo _method con valor put
+    // Obtener los valores de fecha y hora
+    let dateValue = document.getElementById('date').value;
+    let timeValue = document.getElementById('time').value;
 
-    fetch(`/incomes/${formData.get('id')}`, {
-        method: 'POST', // Usar POST en lugar de PUT
-        body: formData
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log('Registro actualizado correctamente.');
-                window.location.href = '/incomes'; // Redirigir a la lista de ingresos
-            } else {
-                console.error('Error al actualizar el registro.');
-                response.text().then(text => {
-                    console.error('Detalles del error:', text);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error en la solicitud:', error);
-        });
+    // Combinar fecha y hora en un solo campo datetime
+    let datetimeValue = dateValue + ' ' + timeValue;
+
+    // Actualizar el valor de los campos date y time
+    document.getElementById('date').value = dateValue;
+    document.getElementById('time').value = timeValue;
+
+    // Deshabilitar los campos date y time para evitar edición accidental
+    document.getElementById('date').disabled = true;
+    document.getElementById('time').disabled = true;
+
+    // Agregar un campo oculto para enviar datetime al servidor
+    let hiddenDateTimeInput = document.createElement('input');
+    hiddenDateTimeInput.type = 'hidden';
+    hiddenDateTimeInput.name = 'datetime';
+    hiddenDateTimeInput.value = datetimeValue;
+    this.appendChild(hiddenDateTimeInput);
+
+    // Habilitar el botón de guardar y deshabilitar el botón de editar
+    document.getElementById('edit-button').style.display = 'inline-block';
+    document.getElementById('save-button').style.display = 'none';
+
+    // Enviar el formulario
+    this.submit();
 });
 
 function confirmAndDelete(id) {
