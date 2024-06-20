@@ -57,13 +57,14 @@
         <div class="button-container">
             <button type="button" id="edit-button" class="button-link">Modificar</button>
             <button type="submit" id="save-button" class="button-link" style="display:none;">Guardar</button>
+            <button type="button" onclick="confirmAndDelete(<?= $income['id'] ?>)" class="delete-button">Eliminar</button>
         </div>
     </form>
 
-    <button onclick="confirmAndDelete(<?= $income['id'] ?>)">Eliminar</button>
     <a class="back-link" href="/incomes">Volver a la lista de ingresos</a>
 
 </main>
+
 <script src="/script/show.js"></script>
 
 </body>

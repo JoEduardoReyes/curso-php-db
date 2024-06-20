@@ -14,6 +14,7 @@
 .field-label {
     font-weight: bold;
     color: #ffffff;
+    margin-bottom: 5px;
 }
 
 .field-value {
@@ -33,20 +34,133 @@
     transition: background-color 0.3s ease;
 }
 
-.delete-button {
-    background-color: #d9534f; /* Rojo */
-    color: #ffffff;
+.back-link:hover {
+    background-color: #0d8bff; /* Azul claro al hacer hover */
+}
+
+/* Estilos para el formulario cuando está deshabilitado */
+#income-details-form[disabled] .form-control {
+    background-color: transparent;
     border: none;
-    padding: 8px 16px;
+    color: #cccccc;
+    font-size: 1.1em;
+    padding: 0;
+    line-height: 1.5em;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#income-details-form[disabled] .form-control:focus {
+    outline: none;
+}
+
+#income-details-form[disabled] .form-control::placeholder {
+    color: #666666;
+}
+
+#income-details-form[disabled] .input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#income-details-form[disabled] .input-group .label {
+    flex: 1;
+    margin-right: 10px;
+    text-align: right;
+}
+
+#income-details-form[disabled] .input-group input[type="date"],
+#income-details-form[disabled] .input-group input[type="time"],
+#income-details-form[disabled] .input-group textarea {
+    background-color: transparent;
+    border: none;
+    color: #cccccc;
+    font-size: 1.1em;
+    padding: 0;
+    line-height: 1.5em;
+    width: auto;
+    margin-right: 10px;
+}
+
+#income-details-form[disabled] .input-group input[type="date"]:focus,
+#income-details-form[disabled] .input-group input[type="time"]:focus,
+#income-details-form[disabled] .input-group textarea:focus {
+    outline: none;
+}
+
+#income-details-form[disabled] .input-group input[type="date"]::before,
+#income-details-form[disabled] .input-group input[type="time"]::before,
+#income-details-form[disabled] .input-group textarea::before {
+    display: none;
+}
+
+#income-details-form[disabled] .input-group select {
+    background-color: transparent;
+    border: none;
+    color: #cccccc;
+    font-size: 1.1em;
+    padding: 0;
+    line-height: 1.5em;
+    width: auto;
+}
+
+/* Estilos para el formulario cuando está habilitado (modo edición) */
+#income-details-form .form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+#income-details-form .form-control:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #fff;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.delete-button:hover {
+.button-container button#edit-button {
+    background-color: #007bff; /* Azul */
+}
+
+.button-container button#edit-button:hover {
+    background-color: #0056b3; /* Azul más oscuro al hacer hover */
+}
+
+.button-container button#save-button {
+    background-color: #28a745; /* Verde */
+}
+
+.button-container button#save-button:hover {
+    background-color: #218838; /* Verde más oscuro al hacer hover */
+}
+
+.button-container button.delete-button {
+    background-color: #d9534f; /* Rojo */
+}
+
+.button-container button.delete-button:hover {
     background-color: #c9302c; /* Rojo más oscuro al hacer hover */
 }
 
-.back-link:hover {
-    background-color: #0d8bff; /* Azul claro al hacer hover */
-}
