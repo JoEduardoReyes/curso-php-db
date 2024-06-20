@@ -158,7 +158,7 @@ class IncomesController
 
       $this->connection->commit();
 
-      echo "El registro con ID {$id} ha sido actualizado exitosamente.\n";
+      header("Location: /incomes/$id");
     } catch (PDOException $e) {
       $this->connection->rollBack();
       echo "Error al intentar actualizar el registro: " . $e->getMessage();
