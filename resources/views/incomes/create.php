@@ -14,35 +14,36 @@
     <form action="/incomes" method="post" id="income-form">
 
         <div class="input-group">
-            <label for="payment_method">Método de pago</label>
-            <select name="payment_method" id="payment_method">
+            <label for="payment_method" class="label">Método de pago</label>
+            <select name="payment_method" id="payment_method" class="form-control">
                 <option value="1" selected>Cuenta bancaria</option>
                 <option value="2">Tarjeta de crédito</option>
             </select>
         </div>
 
         <div class="input-group">
-            <label for="type">Tipo de ingreso</label>
-            <select name="type" id="type">
+            <label for="type" class="label">Tipo de ingreso</label>
+            <select name="type" id="type" class="form-control">
                 <option value="1" selected>Pago de nómina</option>
                 <option value="2">Reembolso</option>
             </select>
         </div>
 
         <div class="input-group">
-            <label for="date">Fecha</label>
-            <input type="date" name="date" id="date">
-            <input type="time" name="time" id="time">
+            <label for="date" class="label">Fecha</label>
+            <input type="date" name="date" id="date" class="form-control">
+            <label for="time" class="label">Hora</label>
+            <input type="time" name="time" id="time" class="form-control">
         </div>
 
         <div class="input-group">
-            <label for="amount">Monto</label>
-            <input type="number" name="amount" id="amount" value="0" step="0.01">
+            <label for="amount" class="label">Monto</label>
+            <input type="number" name="amount" id="amount" class="form-control" value="0" step="0.01">
         </div>
 
         <div class="input-group">
-            <label for="description">Descripción</label>
-            <textarea name="description" id="description"></textarea>
+            <label for="description" class="label">Descripción</label>
+            <textarea name="description" id="description" class="form-control"></textarea>
         </div>
 
         <input type="hidden" name="method" value="post">
