@@ -14,7 +14,7 @@
 
 <main>
 
-    <table id="income-table">
+    <table>
         <thead>
         <tr>
             <th>Método de pago</th>
@@ -26,10 +26,15 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($results as $result): ?>
+        <?php
+        // Importamos los enums necesarios
+        use App\Enums\PaymentMethodEnum;
+        use App\Enums\IncomeTypeEnum;
+
+        foreach ($results as $result): ?>
             <tr>
-                <td class="payment-method"><?php echo htmlspecialchars($result["payment_method"], ENT_QUOTES, 'UTF-8'); ?></td>
-                <td class="income-type"><?php echo htmlspecialchars($result["type"], ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo PaymentMethodEnum::from($result["payment_method"])->getDescription(); ?></td>
+                <td><?php echo IncomeTypeEnum::from($result["type"])->getDescription(); ?></td>
                 <td><?php echo htmlspecialchars($result["date"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php echo htmlspecialchars($result["amount"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php echo htmlspecialchars($result["description"], ENT_QUOTES, 'UTF-8'); ?></td>
@@ -44,35 +49,6 @@
     <a class="button-link" href="/incomes/create">Agregar nuevo ingreso</a>
 
 </main>
-
-<script>
-    // JavaScript para transformar valores numéricos a descripciones
-    const paymentMethodEnum = {
-        1: 'Tarjeta de crédito',
-        2: 'Cuenta bancaria'
-        // Añade más valores según tus enums PHP
-    };
-
-    const incomeTypeEnum = {
-        1: 'Pago de nómina',
-        2: 'Reembolso'
-        // Añade más valores según tus enums PHP
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const rows = document.querySelectorAll('#income-table tbody tr');
-        rows.forEach(row => {
-            const paymentMethodCell = row.querySelector('.payment-method');
-            const incomeTypeCell = row.querySelector('.income-type');
-
-            const paymentMethodValue = parseInt(paymentMethodCell.textContent.trim());
-            const incomeTypeValue = parseInt(incomeTypeCell.textContent.trim());
-
-            paymentMethodCell.textContent = paymentMethodEnum[paymentMethodValue] || 'Desconocido';
-            incomeTypeCell.textContent = incomeTypeEnum[incomeTypeValue] || 'Desconocido';
-        });
-    });
-</script>
 
 </body>
 </html>
