@@ -26,10 +26,15 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($results as $result): ?>
+        <?php
+        // Importamos los enums necesarios
+        use App\Enums\PaymentMethodEnum;
+        use App\Enums\IncomeTypeEnum;
+
+        foreach ($results as $result): ?>
             <tr>
-                <td><?php echo htmlspecialchars($result["payment_method"], ENT_QUOTES, 'UTF-8'); ?></td>
-                <td><?php echo htmlspecialchars($result["type"], ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo PaymentMethodEnum::from($result["payment_method"])->getDescription(); ?></td>
+                <td><?php echo IncomeTypeEnum::from($result["type"])->getDescription(); ?></td>
                 <td><?php echo htmlspecialchars($result["date"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php echo htmlspecialchars($result["amount"], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php echo htmlspecialchars($result["description"], ENT_QUOTES, 'UTF-8'); ?></td>

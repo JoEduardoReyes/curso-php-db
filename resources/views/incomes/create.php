@@ -6,26 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/create.css">
-    <title>Agrega nuevo ingreso</title>
+    <title>Agregar nuevo ingreso</title>
 </head>
 <body>
-<h1>Agrega un nuevo Ingreso</h1>
+<h1>Agregar un nuevo Ingreso</h1>
 <main>
     <form action="/incomes" method="post" id="income-form">
 
         <div class="input-group">
             <label for="payment_method" class="label">Método de pago</label>
             <select name="payment_method" id="payment_method" class="form-control">
-                <option value="1" selected>Cuenta bancaria</option>
-                <option value="2">Tarjeta de crédito</option>
+              <?php
+              use App\Enums\PaymentMethodEnum;
+
+              // Iterar sobre los valores de PaymentMethodEnum
+              foreach (PaymentMethodEnum::values() as $enum) {
+                echo "<option value=\"" . htmlspecialchars($enum->getValue()) . "\">" . htmlspecialchars($enum->getDescription()) . "</option>";
+              }
+              ?>
             </select>
         </div>
 
         <div class="input-group">
             <label for="type" class="label">Tipo de ingreso</label>
             <select name="type" id="type" class="form-control">
-                <option value="1" selected>Pago de nómina</option>
-                <option value="2">Reembolso</option>
+              <?php
+              use App\Enums\IncomeTypeEnum;
+
+              // Iterar sobre los valores de IncomeTypeEnum
+              foreach (IncomeTypeEnum::values() as $enum) {
+                echo "<option value=\"" . htmlspecialchars($enum->getValue()) . "\">" . htmlspecialchars($enum->getDescription()) . "</option>";
+              }
+              ?>
             </select>
         </div>
 

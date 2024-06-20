@@ -21,34 +21,51 @@
         <div class="input-group">
             <label for="payment_method" class="label">Método de pago:</label>
             <select name="payment_method" id="payment_method" class="form-control" disabled>
-                <option value="1" <?= $income['payment_method'] == 1 ? 'selected' : '' ?>>Cuenta bancaria</option>
-                <option value="2" <?= $income['payment_method'] == 2 ? 'selected' : '' ?>>Tarjeta de crédito</option>
+              <?php
+
+              use App\Enums\IncomeTypeEnum;
+              use App\Enums\PaymentMethodEnum;
+
+              foreach (PaymentMethodEnum::values() as $enum) {
+                $selected = $income['payment_method'] == $enum->getValue() ? 'selected' : '';
+                echo "<option value=\"" . htmlspecialchars($enum->getValue()) . "\" $selected>" . htmlspecialchars($enum->getDescription()) . "</option>";
+              }
+              ?>
             </select>
         </div>
 
         <div class="input-group">
             <label for="type" class="label">Tipo de ingreso:</label>
             <select name="type" id="type" class="form-control" disabled>
-                <option value="1" <?= $income['type'] == 1 ? 'selected' : '' ?>>Pago de nómina</option>
-                <option value="2" <?= $income['type'] == 2 ? 'selected' : '' ?>>Reembolso</option>
+              <?php
+
+              foreach (IncomeTypeEnum::values() as $enum) {
+                $selected = $income['type'] == $enum->getValue() ? 'selected' : '';
+                echo "<option value=\"" . htmlspecialchars($enum->getValue()) . "\" $selected>" . htmlspecialchars($enum->getDescription()) . "</option>";
+              }
+              ?>
             </select>
         </div>
 
         <div class="input-group">
             <label for="date" class="label">Fecha:</label>
-            <input type="date" name="date" id="date" class="form-control" value="<?= date('Y-m-d', strtotime($income['date'])) ?>" disabled>
+            <input type="date" name="date" id="date" class="form-control"
+                   value="<?= date('Y-m-d', strtotime($income['date'])) ?>" disabled>
             <label for="time" class="label">Hora:</label>
-            <input type="time" name="time" id="time" class="form-control" value="<?= date('H:i', strtotime($income['date'])) ?>" disabled>
+            <input type="time" name="time" id="time" class="form-control"
+                   value="<?= date('H:i', strtotime($income['date'])) ?>" disabled>
         </div>
 
         <div class="input-group">
             <label for="amount" class="label">Monto:</label>
-            <input type="number" name="amount" id="amount" class="form-control" value="<?= $income['amount'] ?>" step="0.01" disabled>
+            <input type="number" name="amount" id="amount" class="form-control" value="<?= $income['amount'] ?>"
+                   step="0.01" disabled>
         </div>
 
         <div class="input-group">
             <label for="description" class="label">Descripción:</label>
-            <textarea name="description" id="description" class="form-control" disabled><?= $income['description'] ?></textarea>
+            <textarea name="description" id="description" class="form-control"
+                      disabled><?= $income['description'] ?></textarea>
         </div>
 
         <input type="hidden" name="_method" value="put">
@@ -57,7 +74,8 @@
         <div class="button-container">
             <button type="button" id="edit-button" class="button-link">Modificar</button>
             <button type="submit" id="save-button" class="button-link" style="display:none;">Guardar</button>
-            <button type="button" onclick="confirmAndDelete(<?= $income['id'] ?>)" class="delete-button">Eliminar</button>
+            <button type="button" onclick="confirmAndDelete(<?= $income['id'] ?>)" class="delete-button">Eliminar
+            </button>
         </div>
     </form>
 
