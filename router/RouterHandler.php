@@ -31,8 +31,17 @@ class RouterHandler {
         }
         break;
 
-      case "post":
-        $resource->store($this->data);
+      case 'post':
+        if (isset($_POST['_method']) && $_POST['_method'] === 'put') {
+          $resource->update($_POST['id'], $_POST);
+        } else {
+          $resource->store($_POST);
+        }
+        break;
+
+      case 'put': // Agregar el caso para PUT
+        // Llamar al método update del controlador
+        $resource->update($id, $this->data);
         break;
 
       case "delete":
