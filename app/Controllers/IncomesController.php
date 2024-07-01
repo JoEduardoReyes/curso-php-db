@@ -89,10 +89,6 @@ class IncomesController
     }
     header("Location: /incomes");
   }
-
-
-
-
   /**
    * Muestra un único recurso especificado
    */

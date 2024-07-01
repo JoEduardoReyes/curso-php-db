@@ -15,6 +15,8 @@ class IncomeTypeEnum extends Enum
 
   private const PAYMENT = 3;
 
+  private const FREELANCE = 4;
+
   public function getDescription(): string
   {
     switch ($this->value) {
@@ -24,6 +26,8 @@ class IncomeTypeEnum extends Enum
         return 'Reembolso';
       case self::PAYMENT:
         return 'Pago';
+      case self::FREELANCE:
+        return 'Freeance';
       default:
         return 'Desconocido';
     }
