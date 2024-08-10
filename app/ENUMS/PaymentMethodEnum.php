@@ -13,6 +13,8 @@ class PaymentMethodEnum extends Enum
   private const CREDIT_CARD = 1;
   private const BANK_ACCOUNT = 2;
 
+  private const CASH = 3;
+
   public function getDescription(): string
   {
     switch ($this->value) {
@@ -20,6 +22,8 @@ class PaymentMethodEnum extends Enum
         return 'Tarjeta de Crédito';
       case self::BANK_ACCOUNT:
         return 'Cuenta Bancaria';
+      case self::CASH:
+        return 'Efectivo';
       default:
         return 'Desconocido';
     }
